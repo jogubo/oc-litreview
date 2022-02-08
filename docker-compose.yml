@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  app:
+    image: litreview:latest
+    container_name: litreview
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
