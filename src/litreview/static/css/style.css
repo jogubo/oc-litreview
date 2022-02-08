@@ -1,0 +1,39 @@
+/* Webfont: Lato-Thin */@font-face {
+    font-family: 'LatoWebThin';
+    src: url('../fonts/LatoLatin-Thin.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/LatoLatin-Thin.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/LatoLatin-Thin.woff2') format('woff2'), /* Modern Browsers */
+         url('../fonts/LatoLatin-Thin.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/LatoLatin-Thin.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Webfont: Lato-ThinItalic */@font-face {
+    font-family: 'LatoWebThin';
+    src: url('../fonts/LatoLatin-ThinItalic.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/LatoLatin-ThinItalic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/LatoLatin-ThinItalic.woff2') format('woff2'), /* Modern Browsers */
+         url('../fonts/LatoLatin-ThinItalic.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/LatoLatin-ThinItalic.ttf') format('truetype');
+    font-style: italic;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    background-color: #eceae5;
+    color: #2a2a2a;
+    font-family: 'LatoWebThin';
+}
+
+h1 {
+    font-size: 3em;
+}
+
+p {
+    font-size: 1.2em;
+    font-style: italic;
+    font-weight: bold;
+}
