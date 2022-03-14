@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+        <title>LITReview</title>
+    </head>
+    <body>
+        <header>
+            <h1 class>LITReview</h1>
+        </header>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+    </body>
+</html>
