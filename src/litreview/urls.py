@@ -21,5 +21,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('user/', include('users.urls')),
-    path('ticket/<int:id>', views.ticket),
+    path('tickets/', views.tickets, name='tickets'),
+    path('ticket/<int:id>/', views.ticket, name='ticket'),
 ]
