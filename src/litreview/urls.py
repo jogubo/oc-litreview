@@ -23,4 +23,5 @@ urlpatterns = [
     path('user/', include('users.urls')),
     path('tickets/', views.tickets, name='tickets'),
     path('ticket/<int:id>/', views.ticket, name='ticket'),
+    path('new-ticket/', views.new_ticket, name='new-ticket'),
 ]

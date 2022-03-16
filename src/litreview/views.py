@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from reviews import models
+from django.shortcuts import render, redirect
+from reviews import models, forms
 
 
 def index(request):
@@ -23,4 +23,21 @@ def ticket(request, id):
         request,
         'ticket.html',
         {'book': book}
+    )
+
+
+def new_ticket(request):
+    if request.method == 'POST':
+        form = forms.TicketForm(request.POST)
+        if form.is_valid():
+            ticket = form.save()
+            return redirect('ticket', ticket.id)
+
+    else:
+        form = forms.TicketForm()
+
+    return render(
+        request,
+        'new-ticket.html',
+        {'form': form}
     )
