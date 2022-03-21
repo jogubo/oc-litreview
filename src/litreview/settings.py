@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'litreview',
+    'authentication',
     'users',
     'reviews',
 ]
@@ -103,6 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
