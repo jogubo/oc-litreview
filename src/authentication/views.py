@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout,  authenticate
 from .forms import LoginForm
 
 
@@ -15,7 +15,7 @@ def login_page(request):
             )
             if user is not None:
                 login(request, user)
-                message = f'Bonjour {user.username}.'
+                return redirect('index')
             else:
                 message = 'Identifiants incorrects.'
 
@@ -24,3 +24,8 @@ def login_page(request):
         'authentication/login.html',
         {'form': form, 'message': message}
     )
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('logout')

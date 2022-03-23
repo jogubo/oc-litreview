@@ -2,6 +2,10 @@
 
 {% block content%}
 
-    <p>Bienvenue sur LITReview !</p>
+    {% if user.is_authenticated %}
+        <p>Bonjour {{ user.username }}.</p>
+    {% else %}
+        <p>Bienvenue sur LITReview !</p>
+    {% endif %}
 
 {% endblock %}
