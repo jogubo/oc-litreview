@@ -29,7 +29,11 @@ def new_ticket(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
         if form.is_valid():
-            ticket = form.save()
+            ticket = Ticket.objects.create(
+                title=request.POST['title'],
+                description=request.POST['description'],
+                user=request.user
+            )
             return redirect('ticket', ticket.id)
 
     else:

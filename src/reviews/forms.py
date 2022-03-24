@@ -5,4 +5,4 @@ from reviews import models
 class TicketForm(forms.ModelForm):
     class Meta:
         model = models.Ticket
-        fields = '__all__'
+        fields = ['title', 'description', 'image']
