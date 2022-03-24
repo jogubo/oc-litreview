@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
 
 
 class LoginForm(forms.Form):
@@ -11,3 +13,9 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput,
         label='Mot  de passe'
     )
+
+
+class SignupForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = ['username']
