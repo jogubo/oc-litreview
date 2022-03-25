@@ -1,33 +1,23 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.views.generic import View
 from .models import Ticket
 from .forms import TicketForm
 
 
-def tickets(request):
-    books = Ticket.objects.all()
+class CreateTicketView(View):
+    template_name = 'reviews/new-ticket.html',
+    form_class = TicketForm
 
-    return render(
-        request,
-        'reviews/tickets.html',
-        {'books': books}
-    )
+    def get(self, request):
+        form = self.form_class()
+        return render(
+            request,
+            self.template_name,
+            {'form': form}
+        )
 
-
-def ticket(request, id):
-    book = Ticket.objects.get(id=id)
-
-    return render(
-        request,
-        'reviews/ticket.html',
-        {'book': book}
-    )
-
-
-@login_required
-def new_ticket(request):
-    if request.method == 'POST':
-        form = TicketForm(request.POST)
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             ticket = Ticket.objects.create(
                 title=request.POST['title'],
@@ -35,12 +25,28 @@ def new_ticket(request):
                 user=request.user
             )
             return redirect('ticket', ticket.id)
+        return render(
+            request,
+            self.template_name,
+            {'form': form}
+        )
 
-    else:
-        form = TicketForm()
+
+def tickets(request):
+    tickets = Ticket.objects.all()
 
     return render(
         request,
-        'reviews/new-ticket.html',
-        {'form': form}
+        'reviews/tickets.html',
+        {'tickets': tickets}
+    )
+
+
+def ticket(request, id):
+    ticket = Ticket.objects.get(id=id)
+
+    return render(
+        request,
+        'reviews/ticket.html',
+        {'ticket': ticket}
     )

@@ -2,8 +2,8 @@
 
 {% block content%}
 
-    {% for book in books %}
-        <p><a href="{% url 'ticket' book.id %}">{{ book.title }}</a></p>
+    {% for ticket in tickets %}
+        <p><a href="{% url 'ticket' ticket.id %}">{{ ticket.title }}</a></p>
     {% endfor %}
 
 {% endblock %}

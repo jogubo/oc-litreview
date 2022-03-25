@@ -1,13 +1,25 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout,  authenticate
+from django.views.generic import View
 from .forms import LoginForm, SignupForm
 
 
-def login_page(request):
-    form = LoginForm()
+class LoginPageView(View):
+    template_name = 'authentication/login.html',
+    form_class = LoginForm
     message = ''
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
+
+    def get(self, request):
+        form = self.form_class()
+        message = ''
+        return render(
+            request,
+            self.template_name,
+            {'form': form, 'message': message}
+        )
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             user = authenticate(
                 username=form.cleaned_data['username'],
@@ -18,29 +30,38 @@ def login_page(request):
                 return redirect('index')
             else:
                 message = 'Identifiants incorrects.'
-
-    return render(
-        request,
-        'authentication/login.html',
-        {'form': form, 'message': message}
-    )
-
-
-def logout_user(request):
-    logout(request)
-    return redirect('logout')
+        return render(
+            request,
+            self.template_name,
+            {'form': form, 'message': message}
+        )
 
 
-def signup_page(request):
-    form = SignupForm()
-    if request.method == 'POST':
-        form = SignupForm(request.POST)
+class SignupPageView(View):
+    template_name = 'authentication/signup.html',
+    form_class = SignupForm
+
+    def get(self, request):
+        form = self.form_class()
+        return render(
+            request,
+            self.template_name,
+            {'form': form}
+        )
+
+    def post(self, request):
+        form = self.form_class(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('index')
-    return render(
-        request,
-        'authentication/signup.html',
-        {'form': form}
-    )
+        return render(
+            request,
+            self.template_name,
+            {'form': form}
+        )
+
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
