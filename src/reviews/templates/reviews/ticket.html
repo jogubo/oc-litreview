@@ -4,6 +4,7 @@
 
     <p>Ticket - {{ ticket.user }}</p>
     <p>{{ ticket.title }}</p>
+    <p><img src="{{ ticket.image.url }}" alt="{{ ticket.title }}"></p>
     <p>{{ ticket.description }}</p>
 
 {% endblock %}
