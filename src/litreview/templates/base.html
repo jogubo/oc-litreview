@@ -10,19 +10,17 @@
     </head>
     <body>
         <header>
-            <h1 class>LITReview</h1>
-            <nav>
+            <h1 id='title'><a href="/">LITReview</a></h1>
+            {% if user.is_authenticated %}
+            <nav id='menu'>
                 <ul>
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="{% url 'tickets' %}">Livres</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="/">Mon compte</a></li>
+                    <li><a href="/">Flux</a></li>
+                    <li><a href="/">Posts</a></li>
+                    <li><a href="{% url 'subscriptions' %}">Abonnements</a></li>
                     <li><a href="{% url 'logout'%}">Se déconnecter</a></li>
-                    {% else %}
-                    <li><a href="{% url 'login'%}">Se connecter</a></li>
-                    {% endif %}
                 </ul>
             </nav>
+            {% endif %}
         </header>
         <section>
             {% block content %}{% endblock %}

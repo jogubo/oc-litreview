@@ -17,13 +17,11 @@ class CreateTicketView(View):
         )
 
     def post(self, request):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
-            ticket = Ticket.objects.create(
-                title=request.POST['title'],
-                description=request.POST['description'],
-                user=request.user
-            )
+            ticket = form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
             return redirect('ticket', ticket.id)
         return render(
             request,

@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content%}
-
-    {% if user.is_authenticated %}
-        <p>Bonjour {{ user.username }}.</p>
-    {% else %}
-        <p>Bienvenue sur LITReview !</p>
-    {% endif %}
-
+<a href="{% url 'create-ticket' %}"><button>Demander un critique</button></a>
+<a href="{% url 'index' %}"><button>Créer une critique</button></a>
 {% endblock %}

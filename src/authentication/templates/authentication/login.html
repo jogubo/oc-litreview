@@ -2,17 +2,21 @@
 
 {% block content%}
 
-<div>
-    <a href="{% url 'signup' %}">Créer un compte</a>
-</div>
+<div id='login'>
+    <div id='signup'>
+        <h2>Inscrivez-vous maintenant</h2>
+        <a href="{% url 'signup' %}"><button>S'inscrire</button></a>
+    </div>
 
-<div>
-    <h2>{{ message }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Se connecter">
-    </form>
+    <div id='signin'>
+        <h2>Connectez-vous</h2>
+        <p>{{ message }}</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Se connecter">
+        </form>
+    </div>
 </div>
 
 {% endblock %}

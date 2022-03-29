@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 style="text-align: center;">Suivre d'autres utilisateurs</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="forms">
+            <div>{{ form }}</div> 
+            <input type="submit" value="Suivre">
+        </div> 
+    </form>
+{% endblock %}
