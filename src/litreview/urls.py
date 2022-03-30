@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
-from . import views
+from reviews.views import FluxPageView
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', login_required(views.index), name='index'),
+    path('', login_required(FluxPageView.as_view()), name='index'),
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
     path('reviews/', include('reviews.urls')),

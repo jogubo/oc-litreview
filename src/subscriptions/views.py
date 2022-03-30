@@ -11,16 +11,29 @@ class SubscriptionsPageView(View):
 
     def get(self, request):
         form = self.form_class()
+        current_user = request.user
+        subscriptions, subscribers = [], []
+        for user in UserFollows.objects.all():
+            if user.user == current_user:
+                subscriptions.append(user.followed_user)
+            if user.followed_user == current_user:
+                subscribers.append(user.user)
+
         return render(
             request,
             self.template_name,
-            {'form': form}
+            {
+                'form': form,
+                'current_user': current_user,
+                'subscriptions': subscriptions,
+                'subscribers': subscribers
+            }
         )
 
     def post(self, request):
         form = self.form_class(request.POST)
+        users = User.objects.all()
         if form.is_valid():
-            users = User.objects.all()
             entry = request.POST['username']
             user_to_follow = User.objects.get(username=entry)
             for user in users:
