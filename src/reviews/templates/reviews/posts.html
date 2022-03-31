@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h2>Vos posts</h2>
+{% for ticket in tickets %}
+    <div class='post'>
+        <div class='post__date'>
+            <p>Vous avez publié un ticket</p>
+            <p>{{ ticket.time_created }}</p>
+        </div>
+        <h3 class='post__title'>{{ ticket.title }}</h3>
+        <div class='post__detail'>
+            <p class='post__description'>{{ ticket.description }}</p>
+            <p class='post__image'><img src='{{ ticket.image.url }}'></p>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

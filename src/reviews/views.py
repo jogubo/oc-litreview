@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
-from .models import Ticket
+from .models import Ticket, Review
 from .forms import TicketForm
 from subscriptions.models import UserFollows
 
@@ -9,15 +9,28 @@ class FluxPageView(View):
     template_name = 'index.html'
 
     def get(self, request):
-        current_user = request.user
         subscribers = []
         for user in UserFollows.objects.all():
-            if user.followed_user == current_user:
+            if user.followed_user == request.user:
                 subscribers.append(user.user.id)
         return render(
             request,
             self.template_name,
             {'subscribers': subscribers}
+        )
+
+
+class PostPageView(View):
+    template_name = 'reviews/posts.html'
+
+    def get(self, request):
+        # posts = []
+        tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
+        # reviews = Review.objects.filter(user=request.user)
+        return render(
+            request,
+            self.template_name,
+            {'tickets': tickets}
         )
 
 
