@@ -10,20 +10,20 @@
     </head>
     <body>
         <header>
-            <h1 id='title'><a href="/">LITReview</a></h1>
+            <h1 class='logo'><a class='logo__link' href="/">LITReview</a></h1>
             {% if user.is_authenticated %}
-            <nav id='menu'>
-                <ul>
-                    <li><a href="/">Flux</a></li>
-                    <li><a href="{% url 'posts' %}">Posts</a></li>
-                    <li><a href="{% url 'subscriptions' %}">Abonnements</a></li>
-                    <li><a href="{% url 'logout'%}">Se déconnecter</a></li>
+            <nav class='menu'>
+                <ul class='menu__list'>
+                    <li><a class='menu__link' href="/">Flux</a></li>
+                    <li><a class='menu__link' href="{% url 'posts' %}">Posts</a></li>
+                    <li><a class='menu__link' href="{% url 'subscriptions' %}">Abonnements</a></li>
+                    <li><a class='menu__link' href="{% url 'logout'%}">Se déconnecter</a></li>
                 </ul>
             </nav>
             {% endif %}
         </header>
-        <section>
+        <main>
             {% block content %}{% endblock %}
-        </section>
+        </main>
     </body>
 </html>

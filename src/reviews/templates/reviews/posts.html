@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content%}
-<h2>Vos posts</h2>
-{% for ticket in tickets %}
+<section>
+<h2 class='title'>Vos posts</h2>
+    {% for ticket in tickets %}
     <div class='post'>
         <div class='post__date'>
             <p>Vous avez publié un ticket</p>
@@ -13,6 +14,11 @@
             <p class='post__description'>{{ ticket.description }}</p>
             <p class='post__image'><img src='{{ ticket.image.url }}'></p>
         </div>
+        <div class='post__edit'>
+            <a href='#'><button class='btn post__btn'>Modifier</button></a>
+            <a href='#'><button class='btn post__btn'>Supprimer</button></a>
+        </div>
     </div>
-{% endfor %}
+    {% endfor %}
+</section>
 {% endblock %}

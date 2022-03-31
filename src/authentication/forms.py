@@ -6,12 +6,23 @@ from django.contrib.auth import get_user_model
 class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=63,
-        label='Pseudo'
+        label=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'textarea login__textarea',
+                'placeholder': 'Pseudo'
+            }
+        )
     )
     password = forms.CharField(
         max_length=63,
-        widget=forms.PasswordInput,
-        label='Mot  de passe'
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'textarea login__textarea',
+                'placeholder': 'Mot de passe'
+            }
+        )
     )
 
 

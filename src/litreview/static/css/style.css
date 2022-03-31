@@ -22,6 +22,19 @@
     text-rendering: optimizeLegibility;
 }
 
+/* Webfont: Lato-Bold */@font-face {
+    font-family: 'LatoWeb';
+    src: url('../fonts/LatoLatin-Bold.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/LatoLatin-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/LatoLatin-Bold.woff2') format('woff2'), /* Modern Browsers */
+         url('../fonts/LatoLatin-Bold.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/LatoLatin-Bold.ttf') format('truetype');
+    font-style: normal;
+    font-weight: bold;
+    text-rendering: optimizeLegibility;
+}
+
+/* Base */
 * {
     font-family: 'LatoWebThin';
     color: #2a2a2a;
@@ -34,56 +47,91 @@ body {
     margin-right: auto;
 }
 
+.title {
+    text-align: center;
+}
+
+
+.btn {
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #c3c1bd;
+}
+
+ .textarea {
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+p {
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+/* Header */
 header {
     display: flex;
     justify-content: space-between;
-    border-bottom: solid;
+    border-bottom: 2px solid;
     border-color: #2a2a2a;
     margin-bottom: 20px;
     align-items: center;
+    height: 5em;
 }
 
-#title {
+.logo {
     font-size: 3em;
+    font-family: 'LatoWeb';
+    font-weight: bold;
 }
 
-#title a, #title a:visited {
+.logo__link, .logo__link:visited {
     color: #2a2a2a;
     text-decoration: none;
 }
 
-#menu  ul{
+.menu__list{
     display: flex;
     list-style-type: none;
 }
 
-#menu a, #menu a:visited {
+.menu__link, .menu__link:visited {
     padding-left: 15px;
     text-decoration: none;
     font-weight: bold;
     font-size: 1.3em;
 }
 
-#menu a:hover {
+.menu__link:hover {
     text-decoration: underline;
 }
 
-
-
-p {
-    font-size: 1.2em;
-    font-style: italic;
-    font-weight: bold;
-}
-
 /* Login Page */
-#login {
+.login {
     display: flex;
     justify-content: space-around;
     text-align: center;
+    align-items: center;
 }
 
-/* Posts Page */
+.login__textarea {
+    font-family: LatoWeb;
+    font-weight: bold;
+    text-align: center;
+    height: 2.5em;
+    width: 21em;
+}
+
+.login__btn {
+    height: 2em;
+    width: 8em;
+    font-size: 1.2em;
+}
+
+/* Post */
 .post {
     border: 1px solid;
     border-radius: 5px;
@@ -92,13 +140,14 @@ p {
 }
 
 .post__date {
+    font-size: 0.7em;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid;
 }
 
 .post__title {
-    font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.4em;
 }
 
 .post__detail{
@@ -108,4 +157,17 @@ p {
 
 .post__image {
     margin-left: 15px;
+}
+
+.post__edit {
+    text-align: right;
+    border-top: 1px solid;
+    border-color: #8f8d88;
+    padding-top: 1em;
+}
+
+.post__btn {
+    height: 2em;
+    width: 8em;
+    margin-left: 2em;
 }
