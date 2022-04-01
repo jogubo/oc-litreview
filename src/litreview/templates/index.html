@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content%}
-<a href="{% url 'create-ticket' %}"><button>Demander un critique</button></a>
-<a href="{% url 'index' %}"><button>Créer une critique</button></a>
+<section class='flux-header'>
+    <a href="{% url 'create-ticket' %}"><button class='btn flux-header-btn'>Demander une critique</button></a>
+    <a href="{% url 'index' %}"><button class='btn flux-header-btn'>Créer une critique</button></a>
+</section>
 
-{% for user in subscribers %}
-    <p>{{ user }}</p>
-{% endfor %}
+<section>
+    {% for ticket in tickets %}
+    <div class='post'>
+        <div class='post__date'>
+            <p>{{ ticket.user }} a demandé une critique</p>
+            <p>{{ ticket.time_created }}</p>
+        </div>
+        <h3 class='post__title'>{{ ticket.title }}</h3>
+        <div class='post__detail'>
+            <p class='post__description'>{{ ticket.description }}</p>
+            {% if ticket.image.url is not None %}
+            <p class='post__image'><img src='{{ ticket.image.url }}'></p>
+            {% endif %}
+        </div>
+        <div class='post__edit'>
+            <a href="{% url 'create-review' ticket.id %}"><button class='btn post__btn'>Créer une critique</button></a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
 {% endblock %}

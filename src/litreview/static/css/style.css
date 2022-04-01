@@ -109,7 +109,7 @@ header {
     text-decoration: underline;
 }
 
-/* Login Page */
+/* Login */
 .login {
     display: flex;
     justify-content: space-around;
@@ -130,6 +130,51 @@ header {
     width: 8em;
     font-size: 1.2em;
 }
+
+/* Login */
+.signup {
+    max-width: 900px;
+    margin: 0 auto 0 auto;
+}
+
+.signup-field {
+    text-align: center;
+}
+
+.signup-textarea {
+    font-family: LatoWeb;
+    font-weight: bold;
+    text-align: center;
+    height: 2.5em;
+    width: 21em;
+}
+
+.signup-submit {
+    text-align: right;
+    border-top: 1px solid;
+    margin-top: 35px;
+    padding-top: 15px;
+}
+.signup-submit-btn {
+    height: 2em;
+    width: 8em;
+    font-size: 1.2em;
+    margin-left: 15px;
+}
+
+/* Flux */
+.flux-header {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1.5em;
+}
+
+.flux-header-btn {
+    height: 2em;
+    width: 24em;
+    font-size: 1.1em;
+}
+
 
 /* Post */
 .post {
@@ -170,4 +215,39 @@ header {
     height: 2em;
     width: 8em;
     margin-left: 2em;
+}
+
+/* Form */
+.form-textarea {
+    padding: 0.5em;
+    width: 100%;
+    font-size: 1.2em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    resize: none;
+}
+
+.form-textarea-title {
+    height: 1.2em;
+}
+.form-textarea-description {
+    height: 10em;
+}
+
+.form-btn {
+    height: 2em;
+    width: 8em;
+    margin-left: 2em;
+}
+
+.create-review {
+    border: 1px solid;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 0 17px 13px 17px;
+}
+
+.create-review-ticket {
+    width: 85%;
+    margin: 0 auto 0 auto;
 }

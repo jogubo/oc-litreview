@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
+    <section>
         <h2>Suivre d'autres utilisateurs</h2>
         <form method="POST">
             {% csrf_token %}
             <div class="forms">
                 <div>{{ form }}</div> 
-                <input type="submit" value="Suivre">
+                <input class='btn' type="submit" value="Suivre">
             </div>
         </form>
-    </div>
+    </section>
 
-    <div>
+    <section>
         <h2>Abonnements</h2>
         <ul>
             {% for user in subscriptions %}
@@ -21,8 +21,9 @@
                 <p>Aucun abonnement</p>
             {% endfor %}
         </ul>
-    </div>
-    <div>
+    </section>
+
+    <section>
         <h2>Abonnés</h2>
         <ul>
             {% for user in subscribers %}
@@ -31,5 +32,5 @@
                 <p>Aucun abonné</p>
             {% endfor %}
         </ul>
-    </div>
+    </section>
 {% endblock %}

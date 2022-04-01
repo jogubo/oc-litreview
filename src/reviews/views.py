@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from .models import Ticket, Review
-from .forms import TicketForm
+from .forms import TicketForm, ReviewForm
 from subscriptions.models import UserFollows
 
 
@@ -12,11 +12,12 @@ class FluxPageView(View):
         subscribers = []
         for user in UserFollows.objects.all():
             if user.followed_user == request.user:
-                subscribers.append(user.user.id)
+                subscribers.append(user.user)
+        tickets = Ticket.objects.filter(user__in=subscribers)
         return render(
             request,
             self.template_name,
-            {'subscribers': subscribers}
+            {'tickets': tickets}
         )
 
 
@@ -53,6 +54,38 @@ class CreateTicketView(View):
             ticket.user = request.user
             ticket.save()
             return redirect('ticket', ticket.id)
+        return render(
+            request,
+            self.template_name,
+            {'form': form}
+        )
+
+
+class CreateReviewView(View):
+    template_name = 'reviews/create-review.html',
+    form_class = ReviewForm
+
+    def get(self, request, ticket_id=None):
+        form = self.form_class()
+        ticket = Ticket.objects.get(id=ticket_id)
+        return render(
+            request,
+            self.template_name,
+            {
+                'form': form,
+                'ticket': ticket,
+            }
+        )
+
+    def post(self, request, ticket_id=None):
+        form = self.form_class(request.POST, request.FILES)
+        ticket = Ticket.objects.get(id=ticket_id)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            return redirect('index')
         return render(
             request,
             self.template_name,

@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content%}
-
-<h2>Créer un nouveau compte</h2>
-
-{% if form.errors %}
-    {{ form.errors }}
-{% endif %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="S'inscrire">
-</form>
+<section class='signup'>
+    <h2 class='title'>Inscrivez-vous</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class='signup-field'>
+            {% for field in form %}
+            <p>{{ field }}</p>
+            {% endfor %}
+        </div>
+        <div class='signup-submit'>
+            <a href="{% url 'index' %}"><button class='btn signup-submit-btn'>Retour</button></a>
+            <input class='btn signup-submit-btn' type="submit" value="S'inscrire">
+        </div>
+    </form>
+    {% if form.errors %}
+    <div>
+        {{ form.errors }}
+    </div>
+    {% endif %}
+</section>
 
 {% endblock %}

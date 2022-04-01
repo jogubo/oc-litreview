@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content%}
-
-    <h2>Demander une critique</h2>
-
+<section class='form'>
+    <h2 class='title'>Créer un ticket</h2>
     <form action="" method="post" enctype='multipart/form-data'>
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Envoyer">
+        <p style='text-align: right'><input class='btn form-btn' type="submit" value="Envoyer"></p>
     </form>
-
+</section>
 {% endblock %}
