@@ -47,23 +47,23 @@ body {
     margin-right: auto;
 }
 
+hr {
+    height: 1px;
+    border: none;
+    background: #8f8d88;
+}
+
 .title {
     text-align: center;
 }
 
-
-.btn {
+button, input, .textbox {
     border: 1px solid;
     border-radius: 5px;
 }
 
-.btn:hover {
+button:hover, input:hover {
     background-color: #c3c1bd;
-}
-
- .textarea {
-    border: 1px solid;
-    border-radius: 5px;
 }
 
 p {
@@ -184,42 +184,45 @@ header {
     padding: 0 17px 13px 17px;
 }
 
-.post__date {
+.post-date {
     font-size: 0.7em;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid;
 }
 
-.post__title {
+.post-title {
     font-size: 1.4em;
 }
 
-.post__detail{
+.post-detail{
     display: flex;
     justify-content: space-between;
 }
 
-.post__image {
+.post-image {
     margin-left: 15px;
 }
 
-.post__edit {
+.post-footer {
     text-align: right;
-    border-top: 1px solid;
-    border-color: #8f8d88;
     padding-top: 1em;
 }
 
-.post__btn {
+.post-btn {
     height: 2em;
     width: 8em;
     margin-left: 2em;
 }
 
 /* Form */
+.form {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .form-textarea {
-    padding: 0.5em;
     width: 100%;
     font-size: 1.2em;
     margin-top: 0.5em;
@@ -237,7 +240,6 @@ header {
 .form-btn {
     height: 2em;
     width: 8em;
-    margin-left: 2em;
 }
 
 .create-review {
@@ -247,7 +249,18 @@ header {
     padding: 0 17px 13px 17px;
 }
 
+.create-review-btn {
+    height: 2em;
+    width: 10em;
+    margin-left: 2em;
+}
+
 .create-review-ticket {
     width: 85%;
     margin: 0 auto 0 auto;
+}
+
+.rating {
+    display: flex;
+    justify-content: space-around;
 }

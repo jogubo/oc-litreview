@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<section>
+    <h2 class='title'>Créer une critique</h2>
+        <form class='create-review' action="" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            {% if existing_ticket %}
+                <p>Vous êtes en train de poster en réponse à {{ ticket.user }}</p>
+                {% include 'reviews/ticket_snippet.html' %} 
+            {% elif not existing_ticket %}
+                <div>
+                    <p>Livre / Article</p>
+                    <div class='form'>
+                        <div>
+                            <label>{{ ticket_form.title.label }}</label>
+                            {{ ticket_form.title }}
+                        </div>
+                        <div>
+                            <label>{{ ticket_form.description.label }}</label>
+                            {{ ticket_form.description }}
+                        </div>
+                        <div>
+                            <label>{{ ticket_form.image.label }}</label>
+                            {{ ticket_form.image }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            <hr>
+            {% if not existing_ticket %}
+                <p>Critique</p>
+            {% endif %}
+            <div>
+                <div class='form'>
+                    <p>Titre</p>
+                    <p>{{ review_form.headline }}</p>
+                    <p>Note</p>
+                    <div class='rating'>
+                        {% for value in review_form.rating %}
+                            <p>{{ value }}</p>
+                        {% endfor %}
+                    </div>
+                    <p>Commentaire</p>
+                    <p>{{ review_form.body }}</p>
+                </div>
+            </div>
+            <hr>
+            <p style='text-align: right'><input class='btn form-btn' type="submit" value="Envoyer"></p>
+        </form>
+</section>
+{% endblock %}

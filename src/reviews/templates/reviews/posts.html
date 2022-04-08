@@ -3,24 +3,12 @@
 {% block content%}
 <section>
 <h2 class='title'>Vos posts</h2>
-    {% for ticket in tickets %}
-    <div class='post'>
-        <div class='post__date'>
-            <p>Vous avez publié un ticket</p>
-            <p>{{ ticket.time_created }}</p>
-        </div>
-        <h3 class='post__title'>{{ ticket.title }}</h3>
-        <div class='post__detail'>
-            <p class='post__description'>{{ ticket.description }}</p>
-            {% if ticket.image.url is not None %}
-            <p class='post__image'><img src='{{ ticket.image.url }}'></p>
-            {% endif %}
-        </div>
-        <div class='post__edit'>
-            <a href='#'><button class='btn post__btn'>Modifier</button></a>
-            <a href='#'><button class='btn post__btn'>Supprimer</button></a>
-        </div>
-    </div>
+    {% for post in posts %}
+        {% if post.content_type == 'TICKET' %}
+            {% include 'reviews/ticket_snippet.html' with ticket=post edit_ticket=True %}
+        {% elif post.content_type == 'REVIEW' %}
+            {% include 'reviews/review_snippet.html' with review=post ticket=post.ticket edit_review=True %}
+        {% endif %}
     {% endfor %}
 </section>
 {% endblock %}

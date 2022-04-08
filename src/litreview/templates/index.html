@@ -2,28 +2,17 @@
 
 {% block content%}
 <section class='flux-header'>
-    <a href="{% url 'create-ticket' %}"><button class='btn flux-header-btn'>Demander une critique</button></a>
-    <a href="{% url 'index' %}"><button class='btn flux-header-btn'>Créer une critique</button></a>
+    <a href="{% url 'create_ticket' %}"><button class='btn flux-header-btn'>Demander une critique</button></a>
+    <a href="{% url 'create_review' %}"><button class='btn flux-header-btn'>Créer une critique</button></a>
 </section>
 
 <section>
-    {% for ticket in tickets %}
-    <div class='post'>
-        <div class='post__date'>
-            <p>{{ ticket.user }} a demandé une critique</p>
-            <p>{{ ticket.time_created }}</p>
-        </div>
-        <h3 class='post__title'>{{ ticket.title }}</h3>
-        <div class='post__detail'>
-            <p class='post__description'>{{ ticket.description }}</p>
-            {% if ticket.image.url is not None %}
-            <p class='post__image'><img src='{{ ticket.image.url }}'></p>
-            {% endif %}
-        </div>
-        <div class='post__edit'>
-            <a href="{% url 'create-review' ticket.id %}"><button class='btn post__btn'>Créer une critique</button></a>
-        </div>
-    </div>
+    {% for post in posts %}
+        {% if post.content_type == 'TICKET' %}
+            {% include 'reviews/ticket_snippet.html' with ticket=post create_review=True %}
+        {% elif post.content_type == 'REVIEW' %}
+            {% include 'reviews/review_snippet.html' with review=post ticket=post.ticket %}
+        {% endif %}
     {% endfor %}
 </section>
 {% endblock %}

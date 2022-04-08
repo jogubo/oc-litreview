@@ -14,12 +14,12 @@ class TicketForm(forms.ModelForm):
         widgets = {
             'title': forms.Textarea(
                 attrs={
-                    'class': 'textarea form-textarea form-textarea-title',
+                    'class': 'textbox form-textarea form-textarea-title',
                 }
             ),
             'description': forms.Textarea(
                 attrs={
-                    'class': 'textarea form-textarea form-textarea-description',
+                    'class': 'textbox form-textarea form-textarea-description',
                 }
             ),
         }
@@ -47,12 +47,12 @@ class ReviewForm(forms.ModelForm):
             ),
             'headline': forms.Textarea(
                 attrs={
-                    'class': 'textarea form-textarea form-textarea-title',
+                    'class': 'textbox form-textarea form-textarea-title',
                 }
             ),
             'body': forms.Textarea(
                 attrs={
-                    'class': 'textarea form-textarea form-textarea-description',
+                    'class': 'textbox form-textarea form-textarea-description',
                 }
             ),
         }

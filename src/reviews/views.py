@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.db.models import Value, CharField
 from .models import Ticket, Review
 from .forms import TicketForm, ReviewForm
 from subscriptions.models import UserFollows
+from itertools import chain
 
 
 class FluxPageView(View):
@@ -13,11 +15,26 @@ class FluxPageView(View):
         for user in UserFollows.objects.all():
             if user.followed_user == request.user:
                 subscribers.append(user.user)
-        tickets = Ticket.objects.filter(user__in=subscribers)
+
+        tickets = (
+            Ticket.objects.filter(user=request.user) |
+            Ticket.objects.filter(user__in=subscribers)
+        )
+        tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+        reviews = (
+            Review.objects.filter(user=request.user) |
+            Review.objects.filter(user__in=subscribers)
+        )
+        reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+        posts = chain(tickets, reviews)
+        posts = sorted(posts, key=lambda post: post.time_created, reverse=True)
+
         return render(
             request,
             self.template_name,
-            {'tickets': tickets}
+            {'posts': posts}
         )
 
 
@@ -25,18 +42,24 @@ class PostPageView(View):
     template_name = 'reviews/posts.html'
 
     def get(self, request):
-        # posts = []
-        tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
-        # reviews = Review.objects.filter(user=request.user)
+        tickets = Ticket.objects.filter(user=request.user)
+        tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+        reviews = Review.objects.filter(user=request.user)
+        reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
+
+        posts = chain(tickets, reviews)
+        posts = sorted(posts, key=lambda post: post.time_created, reverse=True)
+
         return render(
             request,
             self.template_name,
-            {'tickets': tickets}
+            {'posts': posts}
         )
 
 
 class CreateTicketView(View):
-    template_name = 'reviews/new-ticket.html',
+    template_name = 'reviews/create_ticket.html',
     form_class = TicketForm
 
     def get(self, request):
@@ -62,7 +85,46 @@ class CreateTicketView(View):
 
 
 class CreateReviewView(View):
-    template_name = 'reviews/create-review.html',
+    template_name = 'reviews/create_review.html',
+    ticket_form_class = TicketForm
+    review_form_class = ReviewForm
+
+    def get(self, request):
+        ticket_form = self.ticket_form_class()
+        review_form = self.review_form_class()
+        return render(
+            request,
+            self.template_name,
+            {
+                'ticket_form': ticket_form,
+                'review_form': review_form,
+                'existing_ticket': False,
+            }
+        )
+
+    def post(self, request, ticket_id=None):
+        ticket_form = self.ticket_form_class(request.POST, request.FILES)
+        review_form = self.review_form_class(request.POST, request.FILES)
+        if ticket_form.is_valid() and review_form.is_valid():
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
+            review = review_form.save(commit=False)
+            review.ticket = ticket
+            review.user = request.user
+            review.save()
+            review.ticket.has_review = True
+            review.ticket.save()
+            return redirect('index')
+        return render(
+            request,
+            self.template_name,
+            {'ticket_form': ticket_form, 'review_form': review_form}
+        )
+
+
+class CreateReviewExistingTicketView(View):
+    template_name = 'reviews/create_review.html',
     form_class = ReviewForm
 
     def get(self, request, ticket_id=None):
@@ -72,8 +134,9 @@ class CreateReviewView(View):
             request,
             self.template_name,
             {
-                'form': form,
+                'review_form': form,
                 'ticket': ticket,
+                'existing_ticket': True
             }
         )
 
@@ -84,12 +147,14 @@ class CreateReviewView(View):
             review = form.save(commit=False)
             review.ticket = ticket
             review.user = request.user
+            review.ticket.has_review = True
             review.save()
+            review.ticket.save()
             return redirect('index')
         return render(
             request,
             self.template_name,
-            {'form': form}
+            {'review_form': form}
         )
 
 
