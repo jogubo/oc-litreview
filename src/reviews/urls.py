@@ -1,24 +1,41 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
-from .views import CreateTicketView, CreateReviewView, CreateReviewExistingTicketView, ticket, tickets
-
+from . import views
 
 urlpatterns = [
-    path('list/', tickets, name='tickets'),
-    path('<int:id>/', ticket, name='ticket'),
+    path(
+        '',
+        login_required(views.FluxPage.as_view()),
+        name='index'
+    ),
+    path(
+        'posts/',
+        login_required(views.PostPage.as_view()),
+        name='posts'
+    ),
     path(
         'create-ticket/',
-        login_required(CreateTicketView.as_view()),
+        login_required(views.CreateTicket.as_view()),
         name='create_ticket'
     ),
     path(
         'create-review/',
-        login_required(CreateReviewView.as_view()),
+        login_required(views.CreateReview.as_view()),
         name='create_review'
     ),
     path(
-        '<int:ticket_id>/create-review/',
-        login_required(CreateReviewExistingTicketView.as_view()),
+        'ticket/<int:ticket_id>/update/',
+        login_required(views.UpdateTicket.as_view()),
+        name='update_ticket'
+    ),
+    path(
+        'ticket/<int:ticket_id>/create-review/',
+        login_required(views.CreateReviewExistingTicket.as_view()),
         name='create_review_selected_ticket'
+    ),
+    path(
+        'review/<int:review_id>/update',
+        login_required(views.UpdateReview.as_view()),
+        name='update_review'
     ),
 ]

@@ -16,17 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.decorators import login_required
-from reviews.views import FluxPageView, PostPageView
+from reviews.views import FluxPage, PostPage
 
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', login_required(FluxPageView.as_view()), name='index'),
-    path('posts/', login_required(PostPageView.as_view()), name='posts'),
+    path('', include('reviews.urls')),
+    path('posts/', login_required(PostPage.as_view()), name='posts'),
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
-    path('reviews/', include('reviews.urls')),
+    # path('reviews/', include('reviews.urls')),
     path('subscriptions/', include('subscriptions.urls')),
 ]
 

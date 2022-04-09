@@ -17,7 +17,7 @@
         {% if edit_ticket %}
             <hr>
             <div class='post-footer'>
-                <a href='#'><button class='btn post-btn'>Modifier</button></a>
+                <a href="{% url 'update_ticket' ticket.id %}"><button class='btn post-btn'>Modifier</button></a>
                 <a href='#'><button class='btn post-btn'>Supprimer</button></a>
             </div>
         {% elif create_review and not ticket.has_review %}

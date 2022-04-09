@@ -7,7 +7,7 @@ from subscriptions.models import UserFollows
 from itertools import chain
 
 
-class FluxPageView(View):
+class FluxPage(View):
     template_name = 'index.html'
 
     def get(self, request):
@@ -38,7 +38,7 @@ class FluxPageView(View):
         )
 
 
-class PostPageView(View):
+class PostPage(View):
     template_name = 'reviews/posts.html'
 
     def get(self, request):
@@ -58,8 +58,8 @@ class PostPageView(View):
         )
 
 
-class CreateTicketView(View):
-    template_name = 'reviews/create_ticket.html',
+class CreateTicket(View):
+    template_name = 'reviews/ticket_form.html',
     form_class = TicketForm
 
     def get(self, request):
@@ -67,7 +67,10 @@ class CreateTicketView(View):
         return render(
             request,
             self.template_name,
-            {'form': form}
+            {
+                'form': form,
+                'mode': 'CREATION'
+            }
         )
 
     def post(self, request):
@@ -80,12 +83,48 @@ class CreateTicketView(View):
         return render(
             request,
             self.template_name,
-            {'form': form}
+            {
+                'form': form,
+                'mode': 'CREATION'
+            }
         )
 
 
-class CreateReviewView(View):
-    template_name = 'reviews/create_review.html',
+class UpdateTicket(View):
+    form_class = TicketForm
+    template_name = 'reviews/ticket_form.html',
+
+    def get(self, request, ticket_id=None):
+        ticket = Ticket.objects.get(id=ticket_id)
+        form = self.form_class(instance=ticket)
+        return render(
+            request,
+            self.template_name,
+            {
+                'form': form,
+                'mode': 'EDITING'
+            }
+        )
+
+    def post(self, request, ticket_id=None):
+        ticket = Ticket.objects.get(id=ticket_id)
+        form = self.form_class(request.POST, request.FILES, instance=ticket)
+        if form.is_valid():
+            form.save()
+            ticket.resize_image()
+            return redirect('posts')
+        return render(
+            request,
+            self.template_name,
+            {
+                'form': form,
+                'mode': 'EDITING'
+            }
+        )
+
+
+class CreateReview(View):
+    template_name = 'reviews/review_form.html',
     ticket_form_class = TicketForm
     review_form_class = ReviewForm
 
@@ -99,6 +138,7 @@ class CreateReviewView(View):
                 'ticket_form': ticket_form,
                 'review_form': review_form,
                 'existing_ticket': False,
+                'mode': 'CREATION'
             }
         )
 
@@ -119,12 +159,17 @@ class CreateReviewView(View):
         return render(
             request,
             self.template_name,
-            {'ticket_form': ticket_form, 'review_form': review_form}
+            {
+                'ticket_form': ticket_form,
+                'review_form': review_form,
+                'existing_ticket': False,
+                'mode': 'CREATION'
+            }
         )
 
 
-class CreateReviewExistingTicketView(View):
-    template_name = 'reviews/create_review.html',
+class CreateReviewExistingTicket(View):
+    template_name = 'reviews/review_form.html',
     form_class = ReviewForm
 
     def get(self, request, ticket_id=None):
@@ -136,7 +181,8 @@ class CreateReviewExistingTicketView(View):
             {
                 'review_form': form,
                 'ticket': ticket,
-                'existing_ticket': True
+                'existing_ticket': True,
+                'mode': 'CREATION'
             }
         )
 
@@ -154,25 +200,46 @@ class CreateReviewExistingTicketView(View):
         return render(
             request,
             self.template_name,
-            {'review_form': form}
+            {
+                'review_form': form,
+                'ticket': ticket,
+                'existing_ticket': True,
+                'mode': 'CREATION'
+            }
         )
 
 
-def tickets(request):
-    tickets = Ticket.objects.all()
+class UpdateReview(View):
+    form_class = ReviewForm
+    template_name = 'reviews/review_form.html',
 
-    return render(
-        request,
-        'reviews/tickets.html',
-        {'tickets': tickets}
-    )
+    def get(self, request, review_id=None):
+        review = Review.objects.get(id=review_id)
+        form = self.form_class(instance=review)
+        return render(
+            request,
+            self.template_name,
+            {
+                'review_form': form,
+                'ticket': review.ticket,
+                'existing_ticket': True,
+                'mode': 'EDITING'
+            }
+        )
 
-
-def ticket(request, id):
-    ticket = Ticket.objects.get(id=id)
-
-    return render(
-        request,
-        'reviews/ticket.html',
-        {'ticket': ticket}
-    )
+    def post(self, request, review_id=None):
+        review = Review.objects.get(id=review_id)
+        form = self.form_class(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+        return render(
+            request,
+            self.template_name,
+            {
+                'review_form': form,
+                'ticket': review.ticket,
+                'existing_ticket': True,
+                'mode': 'EDITING'
+            }
+        )
