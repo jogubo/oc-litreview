@@ -79,7 +79,7 @@ class CreateTicket(View):
             ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
-            return redirect('ticket', ticket.id)
+            return redirect('index')
         return render(
             request,
             self.template_name,
@@ -121,6 +121,25 @@ class UpdateTicket(View):
                 'mode': 'EDITING'
             }
         )
+
+
+class DeleteTicket(View):
+    template_name = 'reviews/deletion_form.html',
+
+    def get(self, request, ticket_id=None):
+        ticket = Ticket.objects.get(id=ticket_id)
+        if ticket.user == request.user:
+            return render(
+                request,
+                self.template_name,
+                {'ticket': ticket, 'content_type': 'TICKET'}
+            )
+
+    def post(self, request, ticket_id=None):
+        ticket = Ticket.objects.get(id=ticket_id)
+        if ticket.user == request.user:
+            ticket.delete()
+            return redirect('posts')
 
 
 class CreateReview(View):
@@ -243,3 +262,22 @@ class UpdateReview(View):
                 'mode': 'EDITING'
             }
         )
+
+
+class DeleteReview(View):
+    template_name = 'reviews/deletion_form.html',
+
+    def get(self, request, review_id=None):
+        review = Review.objects.get(id=review_id)
+        if review.user == request.user:
+            return render(
+                request,
+                self.template_name,
+                {'review': review, 'content_type': 'REVIEW'}
+            )
+
+    def post(self, request, review_id=None):
+        review = Review.objects.get(id=review_id)
+        if review.user == request.user:
+            review.delete()
+            return redirect('posts')

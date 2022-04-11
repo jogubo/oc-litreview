@@ -29,6 +29,11 @@ urlpatterns = [
         name='update_ticket'
     ),
     path(
+        'ticket/<int:ticket_id>/delete/',
+        login_required(views.DeleteTicket.as_view()),
+        name='delete_ticket'
+    ),
+    path(
         'ticket/<int:ticket_id>/create-review/',
         login_required(views.CreateReviewExistingTicket.as_view()),
         name='create_review_selected_ticket'
@@ -37,5 +42,10 @@ urlpatterns = [
         'review/<int:review_id>/update',
         login_required(views.UpdateReview.as_view()),
         name='update_review'
+    ),
+    path(
+        'review/<int:review_id>/delete/',
+        login_required(views.DeleteReview.as_view()),
+        name='delete_review'
     ),
 ]

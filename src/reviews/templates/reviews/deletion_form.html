@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<section>
+    {% if content_type == 'TICKET' %}
+        <h2 class='title'>Supprimer votre demande</h2>
+        {% include 'reviews/ticket_snippet.html' %}
+    {% elif content_type == 'REVIEW' %}
+        <h2 class='title'>Supprimer votre critique</h2>
+        {% include 'reviews/review_snippet.html' with ticket=review.ticket %}
+    {% endif %}
+    <form action="" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class='signup-submit'>
+            <a href="{% url 'posts' %}"><button class='btn signup-submit-btn' type='button'>Retour</button></a>
+            <input class='btn signup-submit-btn' type="submit" value="Supprimer">
+        </div>
+    </form>
+</section>
+{% endblock %}

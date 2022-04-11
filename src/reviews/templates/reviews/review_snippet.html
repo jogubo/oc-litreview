@@ -11,7 +11,7 @@
         {% if edit_review %}
             <div class='post-footer'>
                 <a href="{% url 'update_review' review.id %}"><button class='btn post-btn'>Modifier</button></a>
-                <a href='#'><button class='btn post-btn'>Supprimer</button></a>
+                <a href="{% url 'delete_review' review.id %}"><button class='btn post-btn'>Supprimer</button></a>
             </div>
         {% endif %}
 </div>
