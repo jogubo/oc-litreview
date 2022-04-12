@@ -15,8 +15,9 @@
     <section>
         <h2>Abonnements</h2>
         <ul>
-            {% for user in subscriptions %}
-                <li>{{ user }}</li>
+            {% for sub in subscriptions %}
+                <li>{{ sub.user }}</li>
+            <a href="{% url 'delete_subscription' sub.id %}"><button class='btn signup-submit-btn' type='button'>Désabonner</button></a>
             {% empty %}
                 <p>Aucun abonnement</p>
             {% endfor %}
