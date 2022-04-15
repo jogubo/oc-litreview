@@ -53,11 +53,11 @@ hr {
     background: #8f8d88;
 }
 
-.title {
+h2 {
     text-align: center;
 }
 
-button, input, .textbox {
+button, input, .textbox, .border-box {
     border: 1px solid;
     border-radius: 5px;
 }
@@ -69,6 +69,10 @@ button:hover, input:hover {
 p {
     font-size: 1.2em;
     font-style: italic;
+}
+
+ul {
+    padding: 0
 }
 
 /* Header */
@@ -263,4 +267,33 @@ header {
 .rating {
     display: flex;
     justify-content: space-around;
+}
+
+/* Subscriptions */
+.subscriptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subscriptions-adduser {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subscriptions-list {
+    display: flex;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.subscriptions-textbox {
+    width: 22em;
+    height: 1.8em;
+    font-family: Lato-Bold;
+    text-align: center;
+    margin-bottom: 1em;
 }

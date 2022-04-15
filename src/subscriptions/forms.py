@@ -7,7 +7,7 @@ class SubscriptionsForm(forms.Form):
         label=False,
         widget=forms.TextInput(
             attrs={
-                'class': 'textbox',
+                'class': 'subscriptions-textbox',
                 'placeholder': "Nom d'utilisateur"
             }
         )

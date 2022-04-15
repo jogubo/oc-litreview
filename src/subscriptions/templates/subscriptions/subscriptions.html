@@ -5,8 +5,8 @@
         <h2>Suivre d'autres utilisateurs</h2>
         <form method="POST">
             {% csrf_token %}
-            <div class="forms">
-                <div>{{ form }}</div> 
+            <div class="subscriptions-adduser">
+                {{ form }} 
                 <input class='btn' type="submit" value="Suivre">
             </div>
         </form>
@@ -14,24 +14,36 @@
 
     <section>
         <h2>Abonnements</h2>
-        <ul>
-            {% for sub in subscriptions %}
-                <li>{{ sub.user }}</li>
-            <a href="{% url 'delete_subscription' sub.id %}"><button class='btn signup-submit-btn' type='button'>Désabonner</button></a>
-            {% empty %}
-                <p>Aucun abonnement</p>
-            {% endfor %}
-        </ul>
+        <div class="border-box">
+            <ul>
+                {% for sub in subscriptions %}
+                    {% if not forloop.first %}
+                        <hr>
+                    {% endif %}
+                    <li class="subscriptions subscriptions-list">
+                        {{ sub.followed_user }}
+                        <a href="{% url 'delete_subscription' sub.id %}"><button class='btn create-review-btn' type='button'>Désabonner</button></a>
+                    </li>
+                {% empty %}
+                    <p class="subscriptions subscriptions-list">Aucun abonnement</p>
+                {% endfor %}
+            </ul>
+        </div>
     </section>
 
     <section>
         <h2>Abonnés</h2>
+        <div class="border-box">
         <ul>
             {% for user in subscribers %}
-                <li>{{ user }}</li>
+                {% if not forloop.first %}
+                    <hr>
+                {% endif %}
+                <li class="subscriptions subscriptions-list">{{ user }}</li>
             {% empty %}
-                <p>Aucun abonné</p>
+                <p class="subscriptions subscriptions-list">Aucun abonné</p>
             {% endfor %}
         </ul>
+        </div>
     </section>
 {% endblock %}
