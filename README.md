@@ -28,7 +28,7 @@ Il est possible de construire une image Docker si ce dernier est installé.
 
 Depuis la racine du projet, construisez l'image avec la commande
 ```shell
-docker-compose up
+docker-compose build
 ```
 
 Puis lancer le serveur avec la commande 
